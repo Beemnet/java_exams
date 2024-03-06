@@ -12,7 +12,7 @@ import fr.epita.exam_prep.datamodels.Person;
 import fr.epita.exam_prep.exceptions.PersonExtractionException;
 
 public class TestSER1 {
-    private static String column;
+    // private static String column;
 
     public static void test() throws PersonExtractionException {
         List<Person> people = read();
@@ -35,7 +35,6 @@ public class TestSER1 {
         } catch (IOException e) {
             throw new PersonExtractionException(e);
         }
-        column = lines.get(0);
         lines.remove(0);
         List<Person> persons = new ArrayList<>();
         for (String line : lines) {

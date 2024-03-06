@@ -48,4 +48,23 @@ public class PersonCDVDAO {
         return person;
     }
 
+    public void writeAll(List<Person> persons) throws PersonExtractionException {
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("Name,Height (in),Weight (lbs),Age,Sex\n");
+
+        for (Person person : persons) {
+            csvContent.append(person.getName()).append(",");
+            csvContent.append(person.getHeight()).append(",");
+            csvContent.append(person.getWeight()).append(",");
+            csvContent.append(person.getAge()).append(",");
+            csvContent.append(person.getSex()).append("\n");
+        }
+
+        try {
+            Path outputPath = Path.of("./data_output.csv");
+            Files.writeString(outputPath, csvContent.toString());
+        } catch (IOException e) {
+            throw new PersonExtractionException(e);
+        }
+    }
 }

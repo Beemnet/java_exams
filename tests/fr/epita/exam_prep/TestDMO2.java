@@ -7,7 +7,7 @@ public class TestDMO2 {
         Person person = new Person();
         // create sample person
 
-        System.out.println("Test DMO2 passed.");
+        System.out.println("TestDMO2 passed.");
     }
 
 }
