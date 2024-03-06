@@ -16,6 +16,14 @@ public class Person {
         this.age = age;
     }
 
+    public Person(String name, int age, String sex, int height, int weight) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.height = height;
+        this.weight = weight;
+    }
+
     public String getName() {
         return name;
     }

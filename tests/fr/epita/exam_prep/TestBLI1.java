@@ -7,6 +7,9 @@ import fr.epita.exam_prep.datamodels.Person;
 import fr.epita.exam_prep.services.PersonDataService;
 
 public class TestBLI1 {
+    /**
+     * 
+     */
     public static void test() {
         List<Person> persons = new ArrayList<>();
         persons.add(new Person("Alex", 25));

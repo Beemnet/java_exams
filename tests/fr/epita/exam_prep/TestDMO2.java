@@ -4,10 +4,15 @@ import fr.epita.exam_prep.datamodels.Person;
 
 public class TestDMO2 {
     public static void test() {
-        Person person = new Person();
-        // create sample person
+        // create sample person Alex
 
-        System.out.println("TestDMO2 passed.");
+        Person person = new Person("Alex", 42);
+        if (!person.getName().isBlank()) {
+            System.out.println("TestDMO2 passed.");
+        }
     }
 
+    public static void main(String[] args) {
+        // test();
+    }
 }

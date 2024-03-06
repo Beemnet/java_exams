@@ -12,11 +12,9 @@ import fr.epita.exam_prep.datamodels.Person;
 import fr.epita.exam_prep.exceptions.PersonExtractionException;
 
 public class TestSER1 {
-    // private static String column;
 
     public static void test() throws PersonExtractionException {
         List<Person> people = read();
-        // System.out.println(column);
 
         if (!people.isEmpty()) {
             System.out.println("TestSER1 passed.");
@@ -27,8 +25,6 @@ public class TestSER1 {
     public static List<Person> read() throws PersonExtractionException {
 
         Path currentFilePath = Path.of("./data/data.csv");
-        // System.out.println("looking for file at this location:" +
-        // currentFilePath.toFile().getAbsolutePath());
         List<String> lines = new ArrayList<>();
         try {
             lines = Files.readAllLines(currentFilePath);

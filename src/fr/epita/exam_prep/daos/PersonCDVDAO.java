@@ -13,11 +13,13 @@ import fr.epita.exam_prep.exceptions.PersonExtractionException;
 
 public class PersonCDVDAO {
 
+    /**
+     * @return
+     * @throws PersonExtractionException
+     */
     public List<Person> readAll() throws PersonExtractionException {
         List<Person> people = new ArrayList<>();
         Path currentFilePath = Path.of("./data/data.csv");
-        // System.out.println("Looking for file at this location: " +
-        // currentFilePath.toAbsolutePath());
         List<String> lines;
         try {
             lines = Files.readAllLines(currentFilePath);
@@ -38,6 +40,10 @@ public class PersonCDVDAO {
         return people;
     }
 
+    /**
+     * @param row
+     * @return
+     */
     private Person extractPerson(String[] row) {
         Person person = new Person();
         person.setName(row[0].trim());
@@ -48,6 +54,10 @@ public class PersonCDVDAO {
         return person;
     }
 
+    /**
+     * @param persons
+     * @throws PersonExtractionException
+     */
     public void writeAll(List<Person> persons) throws PersonExtractionException {
         StringBuilder csvContent = new StringBuilder();
         csvContent.append("Name,Height (in),Weight (lbs),Age,Sex\n");
