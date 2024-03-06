@@ -3,36 +3,30 @@ package fr.epita.last_exam.services;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CSVReader {
-    public static void main(String[] args) {
-        String csvFile = "./data/mnist_train.csv";
+    public List<String[]> readCSVFile(String csvFile) {
+        List<String[]> data = new ArrayList<>();
         BufferedReader reader = null;
-
+        String[] headers = null;
         try {
             reader = new BufferedReader(new FileReader(csvFile));
             String line;
-            String[] headers = null;
+
             int lineCount = 0;
 
             while ((line = reader.readLine()) != null && lineCount < 2) {
-                // System.out.println(line.substring(0, 50));
-                String[] data = line.split(",");
+                String[] values = line.split(",");
 
                 if (lineCount == 0) {
-                    headers = data;
-                    String[] subHeaders = Arrays.copyOfRange(headers, 0, 15);
-                    System.out.println(Arrays.toString(subHeaders));
+                    headers = values;
                 } else {
-                    double[] values = new double[data.length];
-                    for (int i = 0; i < data.length; i++) {
-                        values[i] = Double.parseDouble(data[i]);
-                    }
-                    double[] subValues = Arrays.copyOfRange(values, 0, 15);
-                    System.out.println(Arrays.toString(subValues));
+                    data.add(values);
                 }
-                // System.out.println(Arrays.toString(data));
+
                 lineCount++;
             }
         } catch (IOException e) {
@@ -45,6 +39,26 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
+        }
+
+        data.add(0, headers); // Add headers at the beginning of the data list
+        return data;
+    }
+
+    public static void main(String[] args) {
+        String csvFile = "./data/mnist_train.csv";
+        CSVReader csvReader = new CSVReader();
+
+        List<String[]> data = csvReader.readCSVFile(csvFile);
+
+        // Print the headers
+        System.out.println(Arrays.toString(data.get(0)));
+
+        // Print the first 15 items in the data list
+        for (int i = 1; i < 16; i++) {
+            String[] row = data.get(i);
+            String[] subValues = Arrays.copyOfRange(row, 0, 15);
+            // System.out.println(Arrays.toString(subValues));
         }
     }
 }
