@@ -45,6 +45,45 @@ public class CSVReader {
         return data;
     }
 
+    public double[] extractValues(String csvFile) {
+        List<String[]> rows = readCSVFile(csvFile);
+
+        // Assuming the values are in the first row of the CSV file
+        String[] firstRow = rows.get(0);
+        double[] values = new double[firstRow.length];
+
+        for (int i = 0; i < firstRow.length; i++) {
+            values[i] = Double.parseDouble(firstRow[i]);
+        }
+
+        return values;
+    }
+
+    public static double[][] reshapeData(double[] values) {
+        double[][] matrix = new double[28][28];
+        for (int i = 0; i < 28; i++) {
+            for (int j = 0; j < 28; j++) {
+                int index = i * 28 + j;
+                matrix[i][j] = values[index];
+            }
+        }
+        return matrix;
+    }
+
+    public static void showMatrix(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] > 100) {
+                    System.out.print("xx ");
+                } else {
+                    System.out.print(".. ");
+                }
+            }
+            System.out.println(); // Move to the next line after each row
+        }
+
+    }
+
     public static void main(String[] args) {
         String csvFile = "./data/mnist_train.csv";
         CSVReader csvReader = new CSVReader();
@@ -61,4 +100,5 @@ public class CSVReader {
             // System.out.println(Arrays.toString(subValues));
         }
     }
+
 }
