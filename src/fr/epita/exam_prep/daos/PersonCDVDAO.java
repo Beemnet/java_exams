@@ -61,7 +61,7 @@ public class PersonCDVDAO {
         }
 
         try {
-            Path outputPath = Path.of("./data_output.csv");
+            Path outputPath = Path.of("./data/data_output.csv");
             Files.writeString(outputPath, csvContent.toString());
         } catch (IOException e) {
             throw new PersonExtractionException(e);

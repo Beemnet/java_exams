@@ -1,5 +1,6 @@
 package fr.epita.exam_prep.launchers;
 
+import fr.epita.exam_prep.TestBLI1;
 import fr.epita.exam_prep.TestDMO2;
 import fr.epita.exam_prep.TestSER1;
 import fr.epita.exam_prep.TestSER2;
@@ -16,6 +17,7 @@ public class Launcher {
         TestSER1.test();
         TestSER2.test();
         TestSER3.test();
+        TestBLI1.test();
 
     }
 }
