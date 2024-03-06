@@ -1,0 +1,4 @@
+.vscode/settings.json
+lib/mysql-connector-j-8.0.32.jar
+data/data.csv
+lib/h2-2.2.224.jar
