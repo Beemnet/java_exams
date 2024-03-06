@@ -6,7 +6,7 @@ import fr.epita.last_exam.daos.ImageCsvDAO;
 import fr.epita.last_exam.datamodels.Image;
 import fr.epita.last_exam.services.CSVReader;
 
-import java.util.List;
+// import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
