@@ -1,7 +1,5 @@
 package fr.epita.last_exam.services;
 
-import fr.epita.last_exam.datamodels.Image;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,8 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
+import fr.epita.last_exam.datamodels.Image;
 
 public class CentroidService {
+    private static final Logger logger = Logger.getLogger(CentroidService.class.getName());
+
     public Map<Integer, double[][]> trainCentroids(List<Image> images) {
         Map<Integer, double[][]> centroids = new HashMap<>();
         Map<Integer, Integer> digitCount = new HashMap<>();
@@ -56,7 +62,7 @@ public class CentroidService {
     }
 
     public void testCentroids() {
-        List<Image> testData = readTestDataFromCSV("mnist_test.csv");
+        List<Image> testData = readTestDataFromCSV("./data/mnist_test.csv");
 
         Map<Integer, double[][]> centroids = trainCentroids(testData);
 
@@ -73,7 +79,7 @@ public class CentroidService {
     private List<Image> readTestDataFromCSV(String csvFilePath) {
         List<Image> data = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("./data/mnist_test.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             // Skip the first line (headers/labels)
             br.readLine();
@@ -91,7 +97,7 @@ public class CentroidService {
                 data.add(image);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Error loading MNIST test data: " + e.getMessage());
         }
 
         return data;
@@ -105,4 +111,60 @@ public class CentroidService {
             System.out.println();
         }
     }
+
+    public List<Image> isolateFirstTenZeroes(List<Image> images) {
+        List<Image> firstTenZeroes = new ArrayList<>();
+        int zeroCount = 0;
+
+        for (Image image : images) {
+            if (image.getLabel() == 0 && zeroCount < 10) {
+                firstTenZeroes.add(image);
+                zeroCount++;
+            }
+        }
+
+        return firstTenZeroes;
+    }
+
+    public double calculateDistance(Image instance, List<Image> centroids) {
+        double minDistance = Double.MAX_VALUE;
+
+        for (Image centroid : centroids) {
+            double distance = 0.0;
+            for (int i = 0; i < instance.getDataMatrix().length; i++) {
+                for (int j = 0; j < instance.getDataMatrix()[i].length; j++) {
+                    double diff = instance.getDataMatrix()[i][j] - centroid.getDataMatrix()[i][j];
+                    distance += Math.pow(diff, 2);
+                }
+            }
+            distance = Math.sqrt(distance);
+            if (distance < minDistance) {
+                minDistance = distance;
+            }
+        }
+
+        return minDistance;
+
+    }
+
+    // public int predict(Image image, Map<Integer, double[][]> centroids) {
+    // int predictedDigit = -1;
+    // double minDistance = Double.MAX_VALUE;
+
+    // for (Map.Entry<Integer, double[][]> entry : centroids.entrySet()) {
+    // int centroidLabel = entry.getKey();
+    // double[][] centroidMatrix = entry.getValue();
+
+    // // double distance = calculateDistance(image.getDataMatrix(),
+    // centroidMatrix);
+
+    // // if (distance < minDistance) {
+    // // minDistance = distance;
+    // // predictedDigit = centroidLabel;
+    // // }
+    // // }
+
+    // return predictedDigit;
+    // }
+    // }
 }

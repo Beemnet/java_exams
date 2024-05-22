@@ -75,4 +75,18 @@ public class ImageClassifierService {
 
         return minDistance;
     }
+
+    // Dummy prediction algorithm
+    public int predictLabel(Image testImage, List<Image> centroids) {
+        double minDistance = Double.MAX_VALUE;
+        int predictedLabel = -1; // Default value if no centroid is found
+        for (int i = 0; i < centroids.size(); i++) {
+            // double distance = calculateDistance(testImage, centroids.get(i));
+            // if (distance < minDistance) {
+            // minDistance = distance;
+            // predictedLabel = centroids.get(i).getLabel(); // Update predicted label
+            // }
+        }
+        return predictedLabel;
+    }
 }
